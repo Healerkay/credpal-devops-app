@@ -60,9 +60,21 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
 
-      # - name: Verify AWS identity
-      #   run: aws sts get-caller-identity
 
-      # - name: Update ECS Service
-      #   run: |
-      #     aws ecs update-service --cluster credpal-cluster --service credpal-service --force-new-deployment
+
+
+      - name: Render ECS task definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ecs-task-def.json
+          container-name: app
+          image:  ${{ secrets.DOCKER_HUB_USERNAME }}/credpal-app:${{ env.VERSION_NUMBER }}
+
+    
+      - name: Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          cluster: credpal-cluster
+          service: credpal-service
+          task-definition: ecs-task-def.json
+          wait-for-service-stability: true   

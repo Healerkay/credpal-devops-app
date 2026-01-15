@@ -34,7 +34,10 @@ resource "aws_iam_role" "github_actions_ecs" {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
           }
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:Healerkay/credpal-devops-app:*"
+            "token.actions.githubusercontent.com:sub" = [
+              "repo:healerkay/credpal-devops-app:*",
+              "repo:Healerkay/credpal-devops-app:*"
+            ]
           }
         }
       }

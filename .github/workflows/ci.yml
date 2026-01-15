@@ -77,4 +77,4 @@ jobs:
           cluster: credpal-cluster
           service: credpal-service
           task-definition: ecs-task-def.json
-          wait-for-service-stability: true   
+          wait-for-service-stability: false   

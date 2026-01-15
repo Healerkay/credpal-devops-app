@@ -9,7 +9,8 @@ resource "aws_iam_openid_connect_provider" "github" {
   ]
 
   thumbprint_list = [
-    "6938fd4d98bab03faadb97b34396831e3780aea1"
+    "6938fd4d98bab03faadb97b34396831e3780aea1",
+    "1c58a3a8518e8759bf075b76b750d4f2df264fcd"
   ]
 }
 
@@ -33,7 +34,7 @@ resource "aws_iam_role" "github_actions_ecs" {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
           }
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:healerkay/credpal-devops-app:*"
+            "token.actions.githubusercontent.com:sub" = "repo:Healerkay/credpal-devops-app:*"
           }
         }
       }

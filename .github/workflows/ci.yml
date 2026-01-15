@@ -3,8 +3,8 @@ name: CI - Build and Test
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
 
 permissions:
   id-token: write
@@ -53,11 +53,23 @@ jobs:
           docker push  ${{ secrets.DOCKER_HUB_USERNAME }}/credpal-app:${{ env.VERSION_NUMBER }}
 
 
+      # - name: Configure AWS credentials (OIDC)
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+      #     aws-region: us-east-1
+
+      # - name: Verify AWS identity
+      #   run: aws sts get-caller-identity
+
+      #   ###########
+
+
+
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: github-actions
           aws-region: us-east-1
-
-      - name: Verify AWS identity
-        run: aws sts get-caller-identity
+          audience: sts.amazonaws.com

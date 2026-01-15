@@ -11,5 +11,6 @@ output "ecs_service_name" {
 }
 
 output "github_actions_role_arn" {
-  value = aws_iam_role.github_actions.arn
+  description = "IAM Role ARN assumed by GitHub Actions via OIDC"
+  value       = aws_iam_role.github_actions_ecs.arn
 }

@@ -8,10 +8,10 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy" });
 });
 
-// GET /status
 app.get("/status", (req, res) => {
   res.status(200).json({
     service: "credpal-devops-app",
+    version: "v2-from-ci-cd",
     uptime: process.uptime(),
     timestamp: new Date().toISOString()
   });

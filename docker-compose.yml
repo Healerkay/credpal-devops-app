@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: credpal-app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: credpal
+      DB_USER: credpal_user
+      DB_PASSWORD: credpal_password
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: credpal-db
+    environment:
+      POSTGRES_DB: credpal
+      POSTGRES_USER: credpal_user
+      POSTGRES_PASSWORD: credpal_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
